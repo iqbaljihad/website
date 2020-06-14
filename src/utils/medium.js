@@ -12,7 +12,10 @@ const parseMediumXML = (xmlString) => {
 
         for (let index = 0; index < item.length; index++) {
             const link = item[index].link[0] || "";
-            const fileName = link.substring(link.lastIndexOf("/") + 1, link.lastIndexOf("?"))
+
+            const firstNumIndex = link.search(/\d/);
+            const fileName = link.substring(link.lastIndexOf("/") + 1, firstNumIndex - 1)
+
             console.log(`Generating JSON file for ${link}`);
             console.log(`${blogPath}/${fileName}.json`);
             fs.writeFile(`${blogPath}/${fileName}.json`, JSON.stringify(item[index], null, 4), () => {

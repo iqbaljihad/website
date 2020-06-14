@@ -1,8 +1,6 @@
-/**
- * Configure your Gatsby site with this file.
- *
- * See: https://www.gatsbyjs.org/docs/gatsby-config/
- */
+require("dotenv").config({
+  path: `.env.${process.env.NODE_ENV}`
+});
 
 module.exports = {
   siteMetadata:{
@@ -25,6 +23,12 @@ module.exports = {
         name: `src`,
         path: `${__dirname}/src/`,
       },
+    },
+    {
+      resolve: "gatsby-source-gh-readme",
+      options: {
+        gitHubToken: `${process.env.GITHUB_API_TOKEN}`
+      }
     },
   ],
 }
