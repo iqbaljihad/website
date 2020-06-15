@@ -5,6 +5,7 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
   const { createNode, createNodeField } = actions
 
   if (node.internal.type === `MarkdownRemark` || node.internal.type === `MediumJson`) {
+    console.log(node)
     const slug = createFilePath({ node, getNode, basePath: `content` })
     createNodeField({
       node,
@@ -57,16 +58,20 @@ exports.createPages = async ({ graphql, actions, getNode }) => {
       }
     `)
 
+  console.log(markdownResult)
+
   markdownResult.data.allMarkdownRemark.edges.forEach(({ node }) => {
-    createPage({
-      path: node.fields.slug,
-      component: path.resolve(`./src/templates/markdown-post.js`),
-      context: {
-        // Data passed to context is available
-        // in page queries as GraphQL variables.
-        slug: node.fields.slug,
-      },
-    })
+    if (node.fields != null) {
+      createPage({
+        path: node.fields.slug,
+        component: path.resolve(`./src/templates/markdown-post.js`),
+        context: {
+          // Data passed to context is available
+          // in page queries as GraphQL variables.
+          slug: node.fields.slug,
+        },
+      })
+    }
   })
 
   const mediumResult = await graphql(`
@@ -84,6 +89,7 @@ exports.createPages = async ({ graphql, actions, getNode }) => {
   `)
 
   mediumResult.data.allMediumJson.edges.forEach(({ node }) => {
+
     createPage({
       path: node.fields.slug,
       component: path.resolve(`./src/templates/medium-blog-post.js`),
@@ -93,6 +99,7 @@ exports.createPages = async ({ graphql, actions, getNode }) => {
         slug: node.fields.slug,
       },
     })
+
   })
 
   const readwiseResult = await graphql(`
@@ -118,7 +125,3 @@ exports.createPages = async ({ graphql, actions, getNode }) => {
     })
   })
 }
-
-
-
-//This onCreateNode function will be called by Gatsby whenever a new node is created (or updated).
