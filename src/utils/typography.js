@@ -6,5 +6,4 @@ const typography = new Typography(kirkhamTheme)
 export default typography
 export const rhythm = typography.rhythm
 
-
 //https://kyleamathews.github.io/typography.js/
