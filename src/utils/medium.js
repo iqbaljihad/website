@@ -1,5 +1,5 @@
 const fs = require("fs")
-const blogPath = "/Volumes/workplace/website/src/content/medium"
+const blogPath = "/Volumes/workplace/website/src/content/thoughts"
 const rssParser = require("rss-parser")
 
 const runMedium = () => {
