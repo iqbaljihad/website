@@ -1,1 +1,1 @@
-{"componentChunkName":"component---src-pages-thoughts-js","path":"/thoughts/","result":{"data":{"allMediumJson":{"edges":[{"node":{"title":"Test Story","date":"2020-06-08T17:04:36.000Z","fields":{"url":"/medium/test-story/"}}}]}},"pageContext":{}}}
+{"componentChunkName":"component---src-pages-thoughts-js","path":"/thoughts/","result":{"data":{"allMediumJson":{"edges":[{"node":{"title":"Test Story","date":"2020-06-08T17:04:36.000Z","fields":{"url":"/thoughts/medium/test-story/"}}}]}},"pageContext":{}}}
