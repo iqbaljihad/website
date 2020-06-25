@@ -5,21 +5,10 @@ import { graphql } from "gatsby"
 export default function About({ data }) {
   return (
     <Layout>
-      <h1>About {data.site.siteMetadata.title}</h1>
+      <h1>About</h1>
       <p>
-        We're the only site running on your computer dedicated to showing the
-        best photos and videos of pandas eating lots of food.
+        This website is about hosting my mind. I want it to be first accessible and useful for me, but later be able to share it with others.
       </p>
     </Layout>
   )
 }
-
-export const query = graphql`
-  query {
-    site {
-      siteMetadata {
-        title
-      }
-    }
-  }
-`

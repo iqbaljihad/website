@@ -3,13 +3,13 @@ import { Link, graphql } from "gatsby"
 import { css } from "@emotion/core"
 import { rhythm } from "../utils/typography"
 import Layout from "../components/layout"
-import blockList from "../utils/blockList"
+import Button from "react-bootstrap/Button"
+import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup"
+import ToggleButton from "react-bootstrap/ToggleButton"
 
 export default function Library({ data }) {
-
-  const readingList = data.allReadwise.nodes.filter(node => !blockList.includes(node.source))
-  console.log(readingList)
   const [readingView, setReadingView] = useState(`default view`)
+  const markdownList = data.allMdx.nodes
 
   return (
     <Layout>
@@ -18,79 +18,125 @@ export default function Library({ data }) {
           css={css`
             display: inline-block;
             border-bottom: 1px solid;
+            margin-right: 1rem;
           `}
         >
           Library
         </h1>
-        <div>
-          <button onClick={() => setReadingView('books')}>Books</button>
-          <button onClick={() => setReadingView('articles')}>Articles</button>
-          <button onClick={() => setReadingView('videos')}>Videos</button>
+        <div
+          css={css`
+            display: inline-block;
+          `}
+        >
+          {RadioButtonGroup(setReadingView)}
         </div>
+      </div>
 
-        { renderLibraryList(readingList, readingView) }
+      <div
+        css={css`
+          display: inline-block;
+        `}
+      >
+        {renderLibraryList(markdownList, readingView)}
       </div>
     </Layout>
   )
 }
 
 function renderLibraryList(readingList, readingView) {
-  var filter;
-
+  var filter
   if (readingView === `books`) {
-    filter = [`kindle`]
+    filter = [`book`]
   } else if (readingView === `articles`) {
-    filter = [`medium`]
+    filter = [`article`]
   } else if (readingView === `videos`) {
-    filter = [`none`]
-  } else { // default view
-    filter = [`kindle`]
+    filter = [`video`]
+  } else {
+    // default view
+    filter = [`book`]
   }
-  const filteredReadingList = readingList.filter(node => filter.includes(node.medium))
 
-  return filteredReadingList.map((node) => (
-    <div >
+  const filteredReadingList = readingList.filter(node =>
+    filter.includes(node.frontmatter.type)
+  )
+
+  return filteredReadingList.map((node, i) => (
+    <div key={i}>
       <Link
-        to={node.slug}
-        css={css`text-decoration: none; color: inherit;`}
+        to={node.fields.url}
+        css={css`
+          text-decoration: none;
+          color: inherit;
+        `}
       >
         <h3
-          css={css`margin-bottom: ${rhythm(1 / 4)};`}
+          css={css`
+            margin-bottom: ${rhythm(1 / 4)};
+          `}
         >
-
-          {node.source}{" "}
+          {node.frontmatter.title}{" "}
           <span
-            css={css`color: #bbb;`}
+            css={css`
+              color: #bbb;
+            `}
           >
-            {renderDate(node)}
+            — {node.frontmatter.date}
           </span>
-
         </h3>
       </Link>
     </div>
   ))
 }
 
-function renderDate(node) {
-  if (node.highlights.length > 0) {
-    const date = node.highlights[0].created
-    var d = new Date(date * 1000)
-    //return d.toDateString
-    return d.toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric' })
-  }
+function RadioButtonGroup(setReadingView) {
+  const [radioValue, setRadioValue] = useState("books")
+
+  const radios = [
+    { name: "Books", value: "books" },
+    { name: "Articles", value: "articles" },
+    { name: "Videos", value: "videos" },
+  ]
+
+  return (
+    <div style={{marginBottom: rhythm(1)}}>
+      <ToggleButtonGroup type="radio" name="viewType" defaultValue="books">
+        {radios.map((radio, idx) => (
+          <ToggleButton
+            key={idx}
+            type="radio"
+            variant="secondary"
+            name="radio"
+            value={radio.value}
+            checked={radioValue === radio.value}
+            onChange={e => {
+              setRadioValue(e.currentTarget.value)
+              setReadingView(e.currentTarget.value)
+            }}
+            css={css`
+              margin-right: 0.5rem;
+            `}
+          >
+            {radio.name}
+          </ToggleButton>
+        ))}
+      </ToggleButtonGroup>
+    </div>
+  )
 }
 
 export const query = graphql`
   query {
-    allReadwise(sort: {fields: highlights___created, order: DESC}) {
+    allMdx(sort: {fields: frontmatter___date, order: DESC}) {
       nodes {
         id
-        slug
-        author
-        medium
-        source
-        highlights {
-          created
+        fields {
+          url
+        }
+        frontmatter {
+          title
+          author
+          type
+          date(formatString: "MMMM DD, YYYY")
         }
       }
     }

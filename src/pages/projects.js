@@ -5,7 +5,7 @@ import { rhythm } from "../utils/typography"
 import Layout from "../components/layout"
 
 export default function Projects({ data }) {
-  const projectList = data.allMarkdownRemark.edges
+  //const projectList = data.allMarkdownRemark.edges
   return (
     <Layout>
       <div>
@@ -18,7 +18,9 @@ export default function Projects({ data }) {
           Projects
         </h1>
 
-        { renderProjects(projectList) }
+        {
+          //renderProjects(projectList)
+        }
       </div>
     </Layout>
   )
@@ -36,14 +38,14 @@ function renderProjects(projectList) {
       >
         <h3
           css={css`
-          margin-bottom: ${rhythm(1 / 4)};
-        `}
+            margin-bottom: ${rhythm(1 / 4)};
+          `}
         >
           {node.frontmatter.title}{" "}
           <span
             css={css`
-            color: #bbb;
-          `}
+              color: #bbb;
+            `}
           >
             — {node.frontmatter.date}
           </span>
@@ -54,23 +56,26 @@ function renderProjects(projectList) {
     </div>
   ))
 }
-export const query = graphql`
-  query {
-    allMarkdownRemark(sort: {fields: [frontmatter___date], order: DESC}, filter: {fileAbsolutePath: {regex: "/projects/"}}) {
-      totalCount
-      edges {
-        node {
-          id
-          frontmatter {
-            title
-            date(formatString: "DD MMMM, YYYY")
-          }
-          fields {
-            slug
-          }
-          excerpt
-        }
-      }
-    }
-  }
-`
+// export const query = graphql`
+//   query {
+//     allMarkdownRemark(
+//       sort: { fields: [frontmatter___date], order: DESC }
+//       filter: { fileAbsolutePath: { regex: "/projects/" } }
+//     ) {
+//       totalCount
+//       edges {
+//         node {
+//           id
+//           frontmatter {
+//             title
+//             date(formatString: "DD MMMM, YYYY")
+//           }
+//           fields {
+//             slug
+//           }
+//           excerpt
+//         }
+//       }
+//     }
+//   }
+// `

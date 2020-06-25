@@ -18,35 +18,39 @@ export default function Thoughts({ data }) {
           Thoughts
         </h1>
 
-        { renderThoughts(thoughtList) }
-
+        {renderThoughts(thoughtList)}
       </div>
     </Layout>
   )
 }
 
 function renderThoughts(thoughtList) {
-  return thoughtList.map(({ node }) => (
-    <div key={node.id}>
+  return thoughtList.map(({ node }, i) => (
+    <div key={i}>
       <Link
-        to={node.fields.slug}
+        to={node.fields.url}
         css={css`
-                  text-decoration: none;
-                  color: inherit;
-                `}
+          text-decoration: none;
+          color: inherit;
+        `}
       >
         <h3
           css={css`
-                  margin-bottom: ${rhythm(1 / 4)};
-                `}
+            margin-bottom: ${rhythm(1 / 4)};
+          `}
         >
           {node.title}{" "}
           <span
             css={css`
-                    color: #bbb;
-                  `}
+              color: #bbb;
+            `}
           >
-            — {new Date(node.pubDate).toLocaleDateString("en-US", {year: 'numeric', month: 'long', day: 'numeric' })}
+            —{" "}
+            {new Date(node.date).toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}
           </span>
         </h3>
       </Link>
@@ -56,14 +60,13 @@ function renderThoughts(thoughtList) {
 
 export const query = graphql`
   query {
-
     allMediumJson {
       edges {
         node {
           title
-          pubDate
+          date
           fields {
-            slug
+            url
           }
         }
       }
