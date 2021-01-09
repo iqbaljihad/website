@@ -92,9 +92,9 @@ function RadioButtonGroup(setReadingView) {
   const [radioValue, setRadioValue] = useState("books")
 
   const radios = [
-    { name: "Books", value: "books" },
-    { name: "Articles", value: "articles" },
-    { name: "Videos", value: "videos" },
+    { name: " Books", value: "books" },
+    { name: " Articles", value: "articles" },
+    { name: " Videos", value: "videos" },
   ]
 
   return (
