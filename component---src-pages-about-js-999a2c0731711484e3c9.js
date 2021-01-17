@@ -1,0 +1,2 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[3],{"3XHS":function(t,e,n){"use strict";n.r(e),n.d(e,"default",(function(){return s}));n("q1tI");var i=n("Bl7J"),u=(n("Wbzz"),n("qKvR"));function s(t){t.data;return Object(u.d)(i.a,null,Object(u.d)("h1",null,"About"),Object(u.d)("p",null,"This website is about hosting my mind. I want it to be first accessible and useful for me, but later be able to share it with others."))}}}]);
+//# sourceMappingURL=component---src-pages-about-js-999a2c0731711484e3c9.js.map
