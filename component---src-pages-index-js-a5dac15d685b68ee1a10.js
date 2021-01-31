@@ -1,0 +1,2 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[4],{RXBc:function(e,t,n){"use strict";n.r(t),n.d(t,"default",(function(){return r}));n("q1tI");var o=n("Bl7J"),u=n("qKvR");function r(e){e.data;return url=window.location.href,Object(u.d)(o.a,null,Object(u.d)("div",null,"Welcome to my website. I recommend you start ",Object(u.d)("a",{href:url+"thoughts/medium/why/"},"here"),"."))}}}]);
+//# sourceMappingURL=component---src-pages-index-js-a5dac15d685b68ee1a10.js.map
